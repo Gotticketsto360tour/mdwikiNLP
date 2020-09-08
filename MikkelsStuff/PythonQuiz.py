@@ -21,7 +21,6 @@ def isEven(i):
     return i % 2 == 0
 
 
-# %%
 # b)
 
 def isEvenList(listing):
@@ -49,6 +48,7 @@ def print_word(word):
         word = word[:-1]
 
 
+# ALTERNATIVE RECURSIVE FUNCTION
 def print_word_rec(word):
     if word:
         print(word)
@@ -56,6 +56,10 @@ def print_word_rec(word):
         print_word_rec(word)
 
 
+# %%
+
 # TASK 6:
 def get_keys(dic):
     return list(dic.keys())
+
+# %%
