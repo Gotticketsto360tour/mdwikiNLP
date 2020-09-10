@@ -6,7 +6,7 @@
    - Download the Danish and English model for Stanza prior to class
    - Make sure you have joined the Element forum (Matrix)
    - Make sure you have everything set up from [class 1](classroom_materials/class_01/class_01.md)
- - Required if not familiar with these:
+ - Required if not familiar with these: 
    - GitHub:
      - Watch the Youtube series: [Using GitHub with Visual Studio Code](https://www.youtube.com/watch?v=3Tn58KQvWtU&list=PLpPVLI0A0OkLBWbcctmGxxF6VHWSQw1hi)
      - Set up a GitHub with your studygroup and discover/resolve any issues you might have
@@ -17,7 +17,6 @@
    - Read the paper on [stanza](https://arxiv.org/abs/2003.07082) (6 pages)
    - Look into regular expressions. For example [this 5 minute video](https://www.youtube.com/watch?v=UQQsYXa1EHs) or [this 6 minute read](https://medium.com/better-programming/introduction-to-regex-8c18abdd4f70)
    - Set up a [linter](https://code.visualstudio.com/docs/python/linting), i.e. code spell-checker for VS code. I use flake8 but you can use any.
-
 
 ---
 
@@ -36,16 +35,6 @@ In this class and the following we will build a `Text` class in Python which con
 The class will also introduce some introduction to the module `os` for navigating your operating system.
 
 
-## Class Competition
-This class (and the following) will also include a small competition for the experienced users or for those who likes a challenge. I will try to make these throughout the classes so that the experienced user have something to work on. These will be development on utility tools. The winner will be decided on by the reminder of the class and the winner in most categories will be crowned as the NLP Champion!
-
-For the first challenge is who can make the best function for visualizing word frequencies. Things you might consider:
-Should the plot be interactive?
-Should there be multiple plots?
-How well does it deal with n-grams?
-How should I make the function to make it easy for my fellow students to use?
-
-
 ---
 
 ## Download models for Stanza
@@ -55,11 +44,22 @@ For a guide on downloading stanza models follow these step for a bit more contro
 - Open your python editor of choice
 - Run the following:
 
-```Python
+```
 import stanza
 stanza.download('en')
 stanza.download('da')
 ```
+<!---
+should be:
+
+```python 
+import stanza
+stanza.download('en')
+stanza.download('da')
+```
+
+but python formatting intentionally left out as it breaks the page
+-->
 
 ## Github with Visual Studio Code
 So instead of spending time in introducing GitHub in class. I recommend everyone check out the Youtube series: [Using GitHub with Visual Studio Code](https://www.youtube.com/watch?v=3Tn58KQvWtU&list=PLpPVLI0A0OkLBWbcctmGxxF6VHWSQw1hi). Note that the last video gives a couple of shorthands for creating and cloning repositories which are very convenient. I recommmend you also try creating a GitHub with your studygroup and spent time resolving any issues. For a *much more* extensive introduction see this [video](https://www.youtube.com/watch?v=RGOj5yH7evk).
@@ -86,10 +86,13 @@ In VS code you can use a code spell-checker called a linter which will help debu
 ---
 
 ## Materials used in Class
+Python script with exercises: [text_preprocessor.py](https://github.com/auNLP/mdwikiNLP/blob/master/classroom_materials/class_02/text_processor.py)
 
+Python script with a Stanza example: [stanza_example.py](https://github.com/auNLP/mdwikiNLP/blob/master/classroom_materials/class_02/stanza_example.py)
 
-
-<!---
+<!--
+Things to say before class
+- any questions on GitHub/Live share?
+- linting
+- go through exercise script
 -->
-
-
