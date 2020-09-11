@@ -30,6 +30,7 @@ import re
 import collections
 import stanza
 
+# %%
 
 def sentence_segment(txt):
     """
@@ -41,19 +42,19 @@ def sentence_segment(txt):
     ["NLP is very cool", "It is also useful"]
     """
 
-    return re.split("[.?!,]+\s*", txt)
+    return re.split("(?<=[!.?:])\s(?=[A-Z])", txt)
 
 
-sentence_segment('''Wait, what happens if I never actually do anything? 
-Even my life would be gone''')
+sentence_segment("Wait, what happens if I never actually do anything? Even my life would be gone. Everything happens for a reason")
 
+# %%
 
 def tokenize(sentences):
     """
     sentences (list): Sentences which you want to be tokenized
 
     Example:
-    >>> sent = ["NLP is very cool"]
+    >>> sent = ["NLP is very cool", "It is also useful"]
     >>> tokenize(sent)
     [["NLP", "is", "very", "cool"], ["It", "is", "also", "useful"]]
     """
@@ -61,13 +62,12 @@ def tokenize(sentences):
     empty_list = []
 
     for sentence in sentences:
-        words = re.split("\s", sentence)
-        empty_list.append(words)
-    
+        new_list = re.split("\W", sentence)
+        empty_list.append(new_list)
     return empty_list
 
 
-tokenize(["NLP is very cool", "It is also useful"])
+tokenize(["Here are some sentences", "they could also be called i"])
 
 
 def n_grams(tokenlist, n):
@@ -82,35 +82,67 @@ def n_grams(tokenlist, n):
     >>> n_grams(tokens, n=2)
     [["NLP", "is"], ["is", "very"], ["very", "cool"]]
     """
-
     empty_list = []
 
     for i in range(len(tokenlist)-1):
-        n_gram = tokenlist[i:n+i]
-        empty_list.append(n_gram)
+        new_list = tokenlist[i:i+n]
+
+        if len(new_list) == n:
+           empty_list.append(new_list)
     
     return empty_list
 
 
-n_grams(["NLP", "is", "very", "cool"], 2)    
+n_grams(["NLP", "is", "very", "cool"], 3)
 
+# %%
 
 def ner_regex(tokenlist):
     """
     tokenlist (list): A list of tokens
 
-    peforms named entity recognition using regular expressions
+    performs named entity recognition using regular expressions
     Example:
     >>> sent = ["Karl Friston is very cool"]
     >>> ner_regex(sent)
     ["Karl Friston"]
     """
+    
+    return re.findall("([A-Z][a-z]+(?:[\s]*(?:[A-Z][a-z]+))+)", *tokenlist)
 
-    return re.findall("[A-Z][a-z]+[\s][A-Z][a-z]+", tokenlist[0])
+ner_regex(["Karl Friston's Mom is very cool. But what about Mom? Who is she?"])
+
+# %%
+test_dictionary = ["test", "test", "what"]
+
+test_dictionary.count("test")
+# %%
 
 
-ner_regex(["Karl Friston is very cool"])
+# %%
+def token_frequencies(tokenlist):
+    """
+    tokenlist (list): A list of tokens
 
+    return a list of tokens and their frequencies
+
+    Example:
+    >>> tokens = [["NLP", "is", "very", "cool"],
+                  ["It", "is", "also", "useful"]]
+    >>> token_frequencies(sent)
+    {"NLP": 1, "is": 2, "very": 1, "cool": 1, "It": 1, "also": 1, "useful": 1}
+    """
+
+    if isinstance(tokenlist[0], list):
+        flat_list = [item for sublist in tokenlist for item in sublist]
+    else:
+        flat_list = tokenlist
+    
+    return {item : flat_list.count(item) for item in flat_list}
+
+token_frequencies([["wait", "wait", "do"], ["something", "something", "do"]])
+
+# %%
 
 def token_frequencies(tokenlist):
     """
@@ -131,6 +163,7 @@ def token_frequencies(tokenlist):
         flat_list = tokenlist
     
     return dict(collections.Counter(flat_list))
+
 
 
 token_frequencies(["NLP", "NLP"])
@@ -179,3 +212,5 @@ class Text():
         sentence number, token, lemma, pos-tag, named-entity
         """
         pass
+
+# %%
