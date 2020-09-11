@@ -26,6 +26,9 @@ Additional stuff which you might add is:
     Add plotting functionality for word frequencies
     Add plotting functionality for dependency trees
 """
+import re
+import collections
+import stanza
 
 
 def sentence_segment(txt):
@@ -37,7 +40,12 @@ def sentence_segment(txt):
     >>> sentence_segment(txt)
     ["NLP is very cool", "It is also useful"]
     """
-    pass
+
+    return re.split("[.?!,]+\s*", txt)
+
+
+sentence_segment('''Wait, what happens if I never actually do anything? 
+Even my life would be gone''')
 
 
 def tokenize(sentences):
@@ -49,7 +57,17 @@ def tokenize(sentences):
     >>> tokenize(sent)
     [["NLP", "is", "very", "cool"], ["It", "is", "also", "useful"]]
     """
-    pass
+
+    empty_list = []
+
+    for sentence in sentences:
+        words = re.split("\s", sentence)
+        empty_list.append(words)
+    
+    return empty_list
+
+
+tokenize(["NLP is very cool", "It is also useful"])
 
 
 def n_grams(tokenlist, n):
@@ -64,7 +82,17 @@ def n_grams(tokenlist, n):
     >>> n_grams(tokens, n=2)
     [["NLP", "is"], ["is", "very"], ["very", "cool"]]
     """
-    pass
+
+    empty_list = []
+
+    for i in range(len(tokenlist)-1):
+        n_gram = tokenlist[i:n+i]
+        empty_list.append(n_gram)
+    
+    return empty_list
+
+
+n_grams(["NLP", "is", "very", "cool"], 2)    
 
 
 def ner_regex(tokenlist):
@@ -77,7 +105,11 @@ def ner_regex(tokenlist):
     >>> ner_regex(sent)
     ["Karl Friston"]
     """
-    pass
+
+    return re.findall("[A-Z][a-z]+[\s][A-Z][a-z]+", tokenlist[0])
+
+
+ner_regex(["Karl Friston is very cool"])
 
 
 def token_frequencies(tokenlist):
@@ -92,16 +124,35 @@ def token_frequencies(tokenlist):
     >>> token_frequencies(sent)
     {"NLP": 1, "is": 2, "very": 1, "cool": 1, "It": 1, "also": 1, "useful": 1}
     """
-    pass
+    if isinstance(tokenlist[0], list):
+        flat_list = [item for sublist in tokenlist for item in sublist]
+
+    else:
+        flat_list = tokenlist
+    
+    return dict(collections.Counter(flat_list))
 
 
-def lemmatize_stanza(tokenlist):
+token_frequencies(["NLP", "NLP"])
+
+
+def lemmatize_stanza(tokenlist):  # MIssing stuff
     """
     tokenlist (list): A list of tokens
 
     lemmatize a tokenlist using stanza
     """
-    pass
+
+    nlp = stanza.Pipeline(lang='en', processors="lemma",
+                          tokenize_pretokenized=True)
+    doc = nlp(tokenlist)
+
+    res = [word.lemma for word in doc]
+
+    return res
+    
+
+lemmatize_stanza(["These", "are", "all", "greatly", "influencial"])
 
 
 def postag_stanza(tokenlist):
