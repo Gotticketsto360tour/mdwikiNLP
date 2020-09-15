@@ -1,11 +1,11 @@
-# %% IMPORTS 
+# %% IMPORTS
 
 import collections
 import re
 import requests
 import random
 
-# %% FUNCTIONS 
+# %% FUNCTIONS
 
 def download_txt(url, name=None, write=True):
     if write and name is None:
