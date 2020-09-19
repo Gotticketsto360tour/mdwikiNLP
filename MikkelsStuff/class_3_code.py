@@ -19,7 +19,7 @@ def download_txt(url, name=None, write=True):
 
 def prep_text(text):
     sep_text = re.split(r"[\s]*[']*(?:(?:[\?\.:!_\v]|(?:\\n))+[']*[\s])", text)
-    return [f"<s> {string} </s>" for string in sep_text]
+    return [f"<s> {string.strip()} </s>" for string in sep_text]
 
 
 def tokenize(text):
@@ -110,8 +110,8 @@ for the probabilities.
 The skew is due to some combinations only occuring once.'''
 
 sorted_freqs[5:15]
-sorted_prepped_prob[30:40]
-sorted_prob_uni[0:10]
+#sorted_prepped_prob[30:40]
+#sorted_prob_uni[0:10]
 
 
 # %% GENERATE RANDOM SENTENCE
