@@ -62,7 +62,7 @@ def tokenize(sentences):
     empty_list = []
 
     for sentence in sentences:
-        new_list = re.split("\W", sentence)
+        new_list = re.split("[\W]+", sentence)
         empty_list.append(new_list)
     return empty_list
 
