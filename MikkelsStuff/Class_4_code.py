@@ -93,11 +93,24 @@ def naive_bayes(D):
     sum_pos = sum(counts_positive.values())
     sum_neg = sum(counts_negative.values())
 
-    log_like_pos = {i: (counts_positive.get(i)+1)/(sum_pos + cardinal) for i in counts_positive}
-    log_like_neg = {i: (counts_negative.get(i)+1)/(sum_neg + cardinal) for i in counts_negative}
-    
+    pos_dict = {}
+    neg_dict = {}
 
-    return (log_prior, log_like_pos, log_like_neg, list(counts_total.keys()))
+    for word in all_words:
+        if counts_positive.get(word) != None:
+            pos_freq = counts_positive[word]
+        else: 
+            pos_freq = 0
+        if counts_negative.get(word) != None:
+            neg_freq = counts_negative[word]
+        else:
+            neg_freq = 0
+        pos_dict[word] = (pos_freq+1)/(sum_pos + cardinal)
+        neg_dict[word] = (neg_freq+1)/(sum_neg + cardinal)
+
+
+    return (log_prior, pos_dict, neg_dict, list(counts_total.keys()))
+
 
 def test_naive_bayes(testdoc, logprior, log_like_pos, log_like_neg, V):
     positive,negative = logprior.values()
@@ -105,16 +118,15 @@ def test_naive_bayes(testdoc, logprior, log_like_pos, log_like_neg, V):
     
     for i in tokenized_test[0]:
         if i in V:
-            if log_like_pos.get(i) != None:
-                positive += log_like_pos.get(i)
-            else:
-                negative += log_like_neg.get(i)
-    
+                positive = positive * log_like_pos.get(i)
+                negative = negative * log_like_neg.get(i)
+
     if positive > negative:
-        return "positive"
+        return ("positive", positive)
     else:
-        return "negative"
+        return ("negative", negative)
 
 log_prior, log_like_pos, log_like_neg, V = naive_bayes(training_set)
+
 
 test_naive_bayes(test_set, log_prior, log_like_pos, log_like_neg, V)
