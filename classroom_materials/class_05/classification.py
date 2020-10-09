@@ -19,20 +19,20 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import MultinomialNB
 
 
-def read_imdb():
+def read_imdb(imdb_path="imdb"):
     """
     TASK 1: Write a short description about what this function does and how it
     does it. You should also describe the structure of imdb_files.
     """
     imdb_files = []
-    for path, subdirs, files in os.walk("imdb"):
+    for path, subdirs, files in os.walk(imdb_path):
         for f in files:
             filepath = os.path.join(path, f)
 
             with open(filepath) as f:
                 text = f.read()
 
-            tag = path.split("/")[1]
+            tag = os.path.split(path)[1]
             imdb_files.append([tag, text])
     return pd.DataFrame(imdb_files, columns=["tag", "text"])
 
