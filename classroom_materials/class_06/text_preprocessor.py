@@ -29,6 +29,7 @@ class Text:
     def __init__(self, txt):
         self.txt = txt
 
+<<<<<<< HEAD
     def tokenize(self, method="keras", lemmatize = False):
         if method == "keras":
             self.tokens = keras_tokenizer(self.txt)
@@ -36,6 +37,20 @@ class Text:
             self.tokens = nltk_tokenizer(self.txt)
         elif method == "nltk" and lemmatize:
             self.tokens = nltk_tokenizer(self.txt, lemmatize=True)
+=======
+    def tokenize(self, method="keras", split_sent=False):
+        txt = self.txt
+        if method == "keras":
+            self.tokenizer = keras_tokenizer
+        elif method == "nltk":
+            self.tokenizer = nltk_tokenizer
+
+        if split_sent:
+            txt = txt.split(".")  # too simple
+            self.tokens = [self.tokenizer(t) for t in txt]
+        else:
+            self.tokens = self.tokenizer(txt)
+>>>>>>> a93760947eb5882e86ed659ece0c06bfeb220821
 
     def get_frequencies(self):
         return Counter(self.tokens)
